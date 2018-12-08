@@ -14,7 +14,7 @@ module.exports = (function(app){
   });
 // Login TO DB==================================================================
   app.post('/demo',urlencodedParser,function(req,res){
-   MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+   MongoClient.connect(url, function(err, db) {
    db.collection('userprofile').findOne({ name: req.body.name}, function(err, user) {
              if(user ===null){
                res.end("Login invalid");
@@ -27,18 +27,22 @@ module.exports = (function(app){
    });
  });
 });
+
+
 //register to DB================================================================
 app.post('/regiterToDb',urlencodedParser,function(req,res){
  var obj = JSON.stringify(req.body);
  var jsonObj = JSON.parse(obj);
      res.render('profile',{loginData:req.body});
   });
+
+  
 //register profile to MongoDB================================================================
   app.post('/completeprofile',urlencodedParser,function(req,res){
    var obj = JSON.stringify(req.body);
    console.log("Final reg Data : "+obj);
    var jsonObj = JSON.parse(obj);
-      MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+      MongoClient.connect(url, function(err, db) {
       db.collection("userprofile").insertOne(jsonObj, function(err, res) {
      if (err) throw err;
      console.log("1 document inserted");

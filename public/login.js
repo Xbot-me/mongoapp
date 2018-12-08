@@ -5,6 +5,7 @@ $(document).ready(function(){
           url : '/register',
           success: function(data){
             $("#regDiv").html(data);
+            console.log(data);
           }
         });
     });
@@ -46,14 +47,16 @@ $(document).ready(function(){
         });
     });
  //Save profile Data================================================
- $('#saveBtn').click(function(){
+ $('#saveBtn').click(function(e){
+   e.preventDefault();
    var email = $("#email").val();
-   var phone = $("#phone").val();
-   var education = $("#education").val();
-   var aoi = $("#aoi").val();
+   
+   
+   var gender = $("#gender").val();
+   //console.log(gender);
    var name = $("#name").val();
    var pass = $("#pass").val();
-   var profileData = {'email':email,'phone':phone,'education' : education,'aoi':aoi,'name' : name,'pass' : pass};
+   var profileData = {'email':email,'name' : name,'pass' : pass,'gender':gender};
    $.ajax({
      type : 'POST',
      url : '/completeprofile',
