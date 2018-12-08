@@ -5,7 +5,7 @@ $(document).ready(function(){
           url : '/register',
           success: function(data){
             $("#regDiv").html(data);
-            console.log(data);
+            //console.log(data);
           }
         });
     });
@@ -22,6 +22,9 @@ $(document).ready(function(){
     $("#loginForm").click(function(){
       var uname  = $("#uname").val();
       var upass = $("#upass").val();
+      localStorage.setItem('username', uname);
+      $('#nav').css("display","none");
+      $('#logout').css("display","block");
       var loginData ={'name': uname,'pass':upass};
       $.ajax({
           type : 'POST',
@@ -56,14 +59,31 @@ $(document).ready(function(){
    //console.log(gender);
    var name = $("#name").val();
    var pass = $("#pass").val();
+   localStorage.setItem('username', name);
+      $('#nav').css("display","none");
+      $('#logout').css("display","block");
    var profileData = {'email':email,'name' : name,'pass' : pass,'gender':gender};
    $.ajax({
      type : 'POST',
      url : '/completeprofile',
      data : profileData,
      success : function(data){
+      
         $("#mainDiv").html(data);
      }
    });
  });
+ 
+ if(localStorage.getItem('username')){
+ 
+  
+  $('#logout').click(function(){
+    localStorage.clear();
+
+    $('#nav').css("display","block");
+  $('#logout').css("display","none");
+  window.location.href='/';
+  });
+ 
+}
  });

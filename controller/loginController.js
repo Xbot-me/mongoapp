@@ -19,6 +19,7 @@ module.exports = (function(app){
              if(user ===null){
                res.end("Login invalid");
             }else if (user.name === req.body.name && user.pass === req.body.pass){
+              
             res.render('completeprofile',{profileData:user});
           } else {
             console.log("Credentials wrong");
